@@ -8,6 +8,7 @@ class ProductCard extends StatefulWidget {
   final String image;
   final String price;
   final String title;
+  final Map<String,Object> product;
   final  backgroundColor;
 
 
@@ -16,6 +17,7 @@ class ProductCard extends StatefulWidget {
      required this.image,
      required this.title,
      required this.price,
+     required this.product,
     required this.backgroundColor
      }) ;
   @override
@@ -54,7 +56,7 @@ class _ProductCardState extends State<ProductCard> {
           child: GestureDetector(
             onTap: () {
               
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetail(title:widget.title, image:widget.image, price: widget.price,),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetail(title:widget.title, image:widget.image, price: widget.price,product:widget.product ,),));
             },
             child: Image(image: AssetImage(
               widget.image

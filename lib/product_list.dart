@@ -104,6 +104,8 @@ final List<String> fliter= const ["All","Addidas","Nike","Bata"];
                             image: product['imageUrl'] as String,
                             title:product['title'] as String,
                             price:product['price'] as String,
+                            product: product,
+                            
                             backgroundColor:index.isEven ? 
                             Color.fromARGB(255, 204, 230, 245) : 
                             const Color.fromRGBO(245, 247, 249, 1)

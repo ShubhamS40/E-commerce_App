@@ -1,17 +1,21 @@
 
 import 'package:flutter/material.dart';
+import 'package:shoppingapp/cart_provider.dart';
 import 'package:shoppingapp/global_variables.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetail extends StatefulWidget {
   final String image;
   final String price;
   final String title;
+  final Map<String,dynamic> product;
 
   const ProductDetail({
     super.key,
      required this.image,
      required this.title,
      required this.price,
+     required this.product
   
      }) ;
 
@@ -22,11 +26,27 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+
+  final selectedsize=0;
     void onTap() {
-   print("add product");
+    if(widget.product.length !=0){
+     Provider.of<CartPovider>(context, listen: false).addproduct(
+       widget.product
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+         SnackBar(content: Text("Product Added Sucessfully",style: TextStyle(fontSize: 15,color: Colors.white),),)
+      );
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please Select A Size"))
+      );
+    }
+     
   }
+  
   @override
   Widget build(BuildContext context) {
+  
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

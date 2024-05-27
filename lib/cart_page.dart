@@ -11,11 +11,11 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  final cart=item;
+  
   @override
   Widget build(BuildContext context) {
+final cart=Provider.of<CartPovider>(context).cart;
   
-  // final cart=context.watch<CardProvider>().cart;
 
     return Scaffold(
       appBar: AppBar(title: Align( alignment: Alignment.center,child: Text("Cart",style: Theme.of(context).textTheme.bodyText1)),),
@@ -28,9 +28,27 @@ class _CartPageState extends State<CartPage> {
               backgroundImage: AssetImage(cartItem['imageUrl'] as String),
               radius: 30,
             ),
-            trailing: IconButton(onPressed:(){}, icon: Icon(Icons.delete),),
+            trailing: IconButton(onPressed:(){
+                 showDialog(context: context, builder: (context){
+                  return AlertDialog(
+                    title: Text("Delete Product",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700,fontFamily: AutofillHints.birthday),),
+                    content: Text("Are you sure you want to remove the product from your cart?",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w700,fontFamily: AutofillHints.birthday)),
+                    actions: [
+                      TextButton(onPressed: (){
+                        Navigator.of(context).pop();
+                      }, child: Text("No",style: TextStyle(color: Colors.black),)),
+                      TextButton(onPressed: (){
+                         context
+                                .read<CartPovider>()
+                                .removeproduct(cartItem);
+                        Navigator.of(context).pop();                                
+                      }, child: Text("Yes",style: TextStyle(color: Colors.blue),))
+                    ],
+                  );
+                 });
+            }, icon: Icon(Icons.delete),),
             title: Text(cartItem["title"].toString(),style: TextStyle(fontSize: 20),),
-            subtitle: Text(cartItem['size'].toString(),style: TextStyle(fontSize: 15)),
+            // subtitle: Text(cartItem['size'].toString(),style: TextStyle(fontSize: 15)),
           );
         },
       )
